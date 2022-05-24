@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../assets/style/styles.css" type="text/css" />
+    <title>Lesotho</title>
+</head>
+<body>
+    <!--navigation bar-->
+    <div class="navbar">
+        <h1 id="logo"><a href="../../index.html">Climavow</a></h1>
+
+    <!--navigation bar-->
+    <nav>
+        
+        <ul id="menuList">
+            <li><a href="../about.html">About</a></li>
+            <li><a href="../countries.html">Countries</a></li>
+            <li><a href="../leaders.html">Leaders</a></li>
+            
+        </ul>
+    </nav>
+    <img src="../../assets/media/menu.png" class="menu-icon" onclick="togglemenu()">
+
+    </div>
+    &nbsp&nbsp
+
+    <h2 id="countryHeader">Lesotho</h2>
+   
+
+    <div class="container">
+        <div class="filter3">
+            <form>
+                <h4 style="text-align: center;">Customize Your Plot</h4>
+                
+                
+                <h5>Add Comparison Country</h5>
+                <select id="country">
+                    <option hidden selected>Select country</option>
+                </select>
+
+                <h5>Select Year 1</h5>
+                <select id="year1">
+                    <option hidden selected>Select year</option>
+                </select>
+
+                <h5>Select Year 2</h5>
+                <select id="year2">
+                    <option hidden selected>Select year</option>
+                </select>
+
+                <h5>Indicator</h5>
+                <select id="datasource">
+                    <option hidden selected>Select indicator</option>
+                    <option value="0">Carbon Dioxide Emissions</option>
+                    <option value="1">Methane Emissions</option>
+                    <option value="2">Nitrous Oxide Emissions</option>
+                </select>
+
+                <h5>Chart Type 1</h5>
+                <select id="charttype1">
+                    <option hidden selected>Select Chart Type</option>
+                    <option value="0">Map</option>
+                    <option value="1">Bar Chart</option>
+                    <option value="2">Line Chart</option>
+                </select>
+
+                <h5>Chart Type 2</h5>
+                <select id="charttype2">
+                    <option hidden selected>Select Chart Type</option>
+                    <option value="0">Map</option>
+                    <option value="1">Bar Chart</option>
+                    <option value="2">Line Chart</option>
+                </select>
+
+                <input type="btn" id="submit-btn" value="Get Data" readonly>
+            </form>
+            
+        </div>
+        
+        <div id="vis" class="vis">
+        </div>
+        <div id="vis2" class="vis2">
+        </div>
+    </div>
+    
+    
+            
+<script src="../navresp.js"></script>
+<script type="module">
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+import MapVis from "../../vis/map.js";
+import BarVis from "../../vis/bar.js";
+import LineVis from "../../vis/line.js";
+import VisManager from "../../vis/vis_manager.js";
+
+Promise.all([
+    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"),
+    d3.json("../../data-raw/co2 emissions by country/data.json"),
+    d3.json("../../data-raw/methane emissions/data.json"),
+    d3.json("../../data-raw/nitrous oxide emissions/data.json"),
+]).then(res => {
+    const [geojson, ...datasets] = res;
+    const {_, data} = datasets[0];
+    const countryNames = data.map(x => [x["Country Name"], x["Country Code"]])
+    const nameMap = new Map(countryNames)
+    const years = Object.keys(data[0]).filter(x => !isNaN(x))
+
+
+
+
+    const cfg = {colorInterp: d3.interpolateInferno}
+
+    const vm_args = [
+        [MapVis, geojson, cfg],
+        [BarVis, geojson, cfg],
+        [LineVis, geojson, cfg]
+    ]
+    const name = "Lesotho"
+    const code = nameMap.get(name)
+    const url = new URL(window.location.href)
+    const initialDataset = new URLSearchParams(url.search).get("ds") || 0
+    console.log(initialDataset)
+    const vm = VisManager("#vis", datasets, vm_args, code, initialDataset, 2) //main vis
+
+    const vm2 = VisManager("#vis2", datasets, vm_args, code, initialDataset, 2) //comp vis
+
+
+    d3.select("#charttype1")
+        .on("change", e => {
+            const t = d3.select(e.target).property("value")
+            vm.updateVistype(t)
+        })
+
+    d3.select("#charttype2")
+        .on("change", e => {
+            const t = d3.select(e.target).property("value")
+            vm2.updateVistype(t)
+        })
+
+    d3.select("#datasource")
+        .on("change", e => {
+            const d = d3.select(e.target).property("value")
+            vm.updateDataset(d)
+            vm2.updateDataset(d)
+        })
+
+    d3.select("#year1")
+        .on("change", e => {
+            const year = d3.select(e.target).property("value")
+            vm.updateYear(year)
+        })
+        .selectAll("option")
+            .data(years)
+            .enter()
+                .append("option")
+                    .attr("value", d => d)
+                    .text(d => d)
+
+    d3.select("#year2")
+        .on("change", e => {
+            const year = d3.select(e.target).property("value")
+            vm2.updateYear(year)
+        })
+        .selectAll("option")
+            .data(years)
+            .enter()
+                .append("option")
+                    .attr("value", d => d)
+                    .text(d => d)
+  
+    d3.select("#country")
+        .on("change", e => {
+            const country = d3.select(e.target).property("value")
+            vm2.updateCountry(country)
+        })
+        .selectAll("option")
+            .data(countryNames)
+            .enter()
+                .append("option")
+                    .attr("value", ([name, code]) => code)
+                    .text(([name, code]) => name)
+})
+</script>
+<?xml version="1.0"?>
+</body>
+</html>

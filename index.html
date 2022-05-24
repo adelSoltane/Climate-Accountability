@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <title>Welcome to Climavow!</title>
+</head>
+<body>
+    <div class="navbar">
+        <h1 id="logo"><a href="../index.html">Climavow</a></h1>
+
+    <!--navigation bar-->
+    <nav>
+        
+        <ul id="menuList">
+            <li><a href="pages/about.html">About</a></li>
+            <li><a href="pages/countries.html">Countries</a></li>
+            <li><a href="pages/leaders.html">Leaders</a></li>
+            
+        </ul>
+    </nav>
+    <img src="../assets/media/menu.png" class="menu-icon" onclick="togglemenu()">
+
+    </div>
+
+    <video class="background" src="./assets/media/Dont Set Our World on Fire Protest Sign.mp4" width="1250" height="1000" autoplay loop muted></video>
+    <header class="header">
+        <p id="header-text">
+            Climavow makes it easy to track the climate promises that governments make so that we can hold them accountable.</br>
+            <input id="start-button" type="button" value="Click here to start!">
+        </p>
+    </header>
+</body>
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $("#start-button").click(function(){
+            window.open("pages/leaders.html");
+        })
+    });
+</script>
+<script src="pages/navresp.js"></script>
+
+</html>

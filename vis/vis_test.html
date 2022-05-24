@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        </style>
+    </head>
+
+    <body>
+        <select id="datasource">
+            <option value="0">Carbon Dioxide Emissions</option>
+            <option value="1">Methane Emissions</option>
+            <option value="2">Nitrous Oxide Emissions</option>
+        </select>
+
+        <select id="charttype">
+            <option value="0">Map</option>
+            <option value="1">Bar Chart</option>
+            <option value="2">Line Chart</option>
+        </select>
+
+        <select id="year">
+        </select>
+        <select id="country">
+        </select>
+        <div id="vis"></div>
+        <div id="map"></div>
+        <div id="bar"></div>
+        <div id="line"></div>
+
+        <script type="module">
+            import * as d3 from "https://cdn.skypack.dev/d3@7";
+            import MapVis from "./map.js";
+            import BarVis from "./bar.js";
+            import LineVis from "./line.js";
+            import VisManager from "./vis_manager.js";
+
+            Promise.all([
+                d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"),
+                d3.json("../data-raw/co2 emissions by country/data.json"),
+                d3.json("../data-raw/methane emissions/data.json"),
+                d3.json("../data-raw/nitrous oxide emissions/data.json"),
+            ]).then(res => {
+                const [geojson, ...datasets] = res;
+                const {_, data} = datasets[0];
+                const countryNames = data.map(x => [x["Country Name"], x["Country Code"]])
+                const years = Object.keys(data[0]).filter(x => !isNaN(x))
+
+
+
+
+                const cfg = {colorInterp: d3.interpolateInferno}
+
+                const vm_args = [
+                    [MapVis, geojson, cfg],
+                    [BarVis, geojson, cfg],
+                    [LineVis, geojson, cfg]
+                ]
+
+                const vm = VisManager(datasets, vm_args)
+
+                d3.select("#charttype")
+                    .on("change", e => {
+                        const t = d3.select(e.target).property("value")
+                        vm.updateVistype(t)
+                    })
+
+                d3.select("#datasource")
+                    .on("change", e => {
+                        const d = d3.select(e.target).property("value")
+                        vm.updateDataset(d)
+                    })
+
+                d3.select("#year")
+                    .on("change", e => {
+                        const year = d3.select(e.target).property("value")
+                        vm.updateYear(year)
+                    })
+                    .selectAll("option")
+                        .data(years)
+                        .enter()
+                            .append("option")
+                                .attr("value", d => d)
+                                .text(d => d)
+
+                d3.select("#country")
+                    .on("change", e => {
+                    console.log(e)
+                        const country = d3.select(e.target).property("value")
+                        vm.updateCountry(country)
+                    })
+                    .selectAll("option")
+                        .data(countryNames)
+                        .enter()
+                            .append("option")
+                                .attr("value", ([name, code]) => code)
+                                .text(([name, code]) => name)
+            })
+        </script>
+    </body>
+
+</html>

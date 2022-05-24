@@ -1,0 +1,436 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+}
+
+@font-face {
+    font-family: Prata;
+    src: url(../fonts/Prata/Prata-Regular.ttf);
+}
+
+@font-face {
+    font-family: Lato-LightItalic;
+    src: url(../fonts/Lato/Lato-LightItalic.ttf);
+}
+
+html {
+    height: 100%;
+}
+
+body{
+    background-color: #FFFDF3;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#leader-pic{
+    border-radius: 10px;
+}
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 8%;
+    padding-right: 8%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.leaders-results{
+    display: flex;
+    font-family: Prata;
+    max-width: 700px;
+    border-radius: 10px;
+    background-color: #F2DFDB;
+    padding: 20px;
+}
+
+.leaders-results #leader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#promises div{ 
+    display: flex;
+    margin-bottom: 30pt;
+    margin-left: 30pt;
+}
+
+/* style for dropdown */
+.filter{
+    font-family: Prata;
+    width: 375px;
+    margin-top: 50px;
+    border-radius: 10px;
+    background-color: #F2DFDB;
+    padding: 20px;
+}
+
+.filter2{
+    font-family: Prata;
+    width: 375px;
+    margin-left: 50px;
+    border-radius: 10px;
+    background-color: #F2DFDB;
+    padding: 20px;
+}
+
+.filter3{
+    font-family: Prata;
+    border-radius: 10px;
+    background-color: #F2DFDB;
+    padding: 20px;
+float: left;    width: 20%;
+}
+
+select{
+    width: 100%;
+    padding: 12px, 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+input[type=btn]{
+    text-align: center;
+    width: 100%;
+    background: #2db333;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: Prata;
+    font-weight: bold;
+}
+
+button{
+    text-align: center;
+    width: 100%;
+    background: #2db333;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: Prata;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: #000;
+    color: white;
+}
+
+input[type=btn]:hover{
+    background-color: #000;
+    color: white;
+}
+
+
+/* Start of Navbar section*/
+.navbar {
+    width: auto;
+    background-color: #FFFDF3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 15px;
+    font-size: 25px;
+}
+
+.navbar li {
+    list-style: none;
+    margin-right: 5rem;
+}
+
+/*.navbar :first-child {
+    margin-right: auto;
+}*/
+
+.navbar a:hover {
+    color: orange;
+}
+
+#logo {
+    font-family: Prata;
+    font-size: 40px;
+    margin-left: 20px;
+} 
+
+.menu-icon{
+    width: 25px;
+    cursor: pointer;
+    display: none;
+}
+
+nav{
+    flex: 1;
+    text-align: right;
+}
+nav ul li{
+    list-style: none;
+    display: inline-block;
+    margin-right: 30px;
+    
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px;
+}
+
+.col-1{
+    flex-basis: 60%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.col-2{
+    position: relative;
+    flex-basis: 60%;
+    display: flex;
+    align-items: center;
+}
+
+.vis{
+    float: left;
+}
+.vis2{
+    float: right;
+
+}
+
+
+
+@media only screen and (max-width:700px) {
+    
+    nav ul{
+        width: 100%;
+        background: linear-gradient(#ff54a2, #ff575a);
+        position: absolute;
+        top: 85px;
+        right: 0;
+        z-index: 2;
+    }
+    nav ul li{
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+       font-size: 20px;
+        
+    }
+    nav ul li a{
+        color: #fff;
+    }
+   
+
+    .menu-icon{
+        display: block;
+    }
+    #menuList{
+        overflow: hidden;
+        transition: 0.8s;
+    }
+    .row{
+        flex-direction: column-reverse;
+        margin: 50px 0;
+        margin-bottom: 0pt;
+    }
+    .col-2{
+        flex-basis: 100%;
+        margin-bottom: 50px;
+    }
+    #promises{
+        font-size: 10px;
+    }
+    
+    .bigmap{
+        display: none;
+    }
+    .filter2{
+        margin: auto;
+        content: "Search below for climate data by country.";
+    }
+    .filter{
+        margin: auto;
+    }
+    .filter3{
+        width: 100%;
+    }
+    .vis{
+        width: auto;
+    }
+    .vis2{
+        width: auto;    
+    }
+    
+
+}
+
+
+
+
+/*End of Navbar section */
+
+/* Start of Background videos and images */
+.background{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1000;
+}
+/* End of Background videos and images */
+
+header {
+    position:static;
+    display: flex;
+    align-items: center;
+    margin-top: 110pt;
+    margin-left: 30pt;
+}
+
+#header-text{
+    width: 25%;
+    font-family:  Lato-LightItalic;
+    font-size: 18pt;
+    color: white;
+}
+
+h2#countryHeader {
+    text-align: center;
+    font-family:  Prata;
+    font-size: 36pt;
+}
+
+a{
+    font-family: Prata;
+    text-decoration: none;
+    color: black;
+}
+
+/* Start of Map Section */
+#map-container {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+}
+
+svg.bigmap {
+    width: 900px;
+    height: 400px;
+
+}
+svg.bigmap path{
+    fill: #de554e;
+    stroke: #FFFDF3;
+    stroke-width: .25
+}
+svg.bigmap path:hover{
+fill: #de8581;
+transition: 0.6s;
+cursor: pointer;
+}
+/* End of Map section */
+
+/* Click to start button */
+#start-button{
+    border:none;
+    font-family: Prata;
+    position:relative;
+    height:30px;
+    font-size:12pt;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+
+#start-button:hover{
+    background:#fff;
+    color:orange;
+}
+#start-button:before,#start-button:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background:orange;
+    transition:400ms ease all;
+}
+
+#start-button:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+#start-button:hover:before,#start-button:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+.plot-customizer{
+    position: relative;
+    left: 30px;
+    width:30%;
+}
+
+/*Style for About box*/
+.about {
+    opacity: 0.7;
+    backdrop-filter: blur(10px);
+    background-color:#FFFDF3;
+    border-radius: 20px;
+    font-family: Prata;
+    line-height: 20pt;
+    max-width: 70%;
+    padding: 10px 20px;
+    margin-top: 10%;
+    margin-left: 5%;
+}
+
+.check {
+    width: 50px;
+    height: 50px;
+}
+
+/*Style for share buttons*/
+#share{
+    margin-left: 46%;
+
+}
+div#share>img{
+    border-radius: 10pt;
+    margin-right: 10px;
+}
+
+/*Style for download button*/
+#download-btn{
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100pt;
+    margin-left: 70%;
+}

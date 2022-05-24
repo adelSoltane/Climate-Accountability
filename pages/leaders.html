@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/style/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Leaders</title>
+</head>
+<body>
+    <div class="navbar">
+        <h1 id="logo"><a href="../index.html">Climavow</a></h1>
+
+    <!--navigation bar-->
+    <nav>
+        
+        <ul id="menuList">
+            <li><a href="about.html">About</a></li>
+            <li><a href="countries.html">Countries</a></li>
+            <li><a href="leaders.html">Leaders</a></li>
+            
+        </ul>
+    </nav>
+    <img src="../assets/media/menu.png" class="menu-icon" onclick="togglemenu()">
+
+    </div>
+<div class="container">
+
+    <img class="background" src="https://www.wkbn.com/wp-content/uploads/sites/48/2020/06/america-protests-world-leaders.jpg?w=1280" width="1250" height="1000" alt="world_leaders">
+
+    <div class="row">
+        <div class="col-1">
+            <div class="filter">
+                <form>
+                    <h4 style="text-align: center;">Search for the person of interest to view their climate promises/progress.</h4>&nbsp&nbsp
+                    <h5>Country</h5>
+                    <select id="level1"></select>
+        &nbsp&nbsp
+                    <h5>Leader</h5>
+                    <select id="level2"></select>
+        &nbsp&nbsp
+                   
+                    <input type="btn" id="submit-btn" value="Get Data" readonly>
+                </form>
+            </div>        
+        </div>
+        <div class="col-2">
+            <div class="leaders-results" id="leaders-rs">
+                <div id="leader">
+                    <img id="leader-pic" src="../assets/media/Barack Obama.jpg" width="170" height="200">
+                    <br/>
+                    <p id="leader-name">Barack Obama</p>
+                </div>
+                <div id="promises">
+                    <div id="promise1">
+                        <img id="check1" class="check" src="../assets/media/check.png">
+                        <p id="promise_text1">Establish the first-ever national carbon pollution standards for power plants.</p>
+                    </div>
+                    <div id="promise2">
+                        <img id="check2" class="check" src="../assets/media/check.png">
+                        <p id="promise_text2">Establish new standards for cleaner gasoline and vehicles to reduce harmful air pollution</p>
+                    </div>
+                    <div id="promise3">
+                        <img id="check3" class="check" src="../assets/media/check.png">
+                        <p id="promise_text3">Cut back on carbon emissions from burning fossil fuels</p>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>
+	<button onclick="down()" id="download-btn">Download</button>
+</div>
+    
+    <!--Share buttons -->  
+    <div id="share">
+        <a onclick="share('facebook')" title="Click to share this post on Facebook"><img id="facebook" src="https://brandlogos.net/wp-content/uploads/2021/04/facebook-icon.png" alt="facebook" width="55" height="55"></a>
+        <a onclick="share('twitter')" title="Click to share this post on Twitter"><img id="twitter" src="https://www.transparentpng.com/thumb/twitter/twitter-smooth-app-icons-png-9.png" alt="twitter" width="45" height="45"></a>
+        <a onclick="share('reddit')" title="Click to share this post on Reddit"><img id="reddit" src="https://www.iconpacks.net/icons/2/free-reddit-logo-icon-2436-thumb.png" alt="reddit" width="50" height="50"></a>  
+    </div>
+    
+    <script src="dropdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+
+
+    <script>
+
+        //This is a work in progress
+
+
+        leaders = [
+            {
+            name: "Joe Biden",
+            country: "United States of America",
+            image: "https://image.cnbcfm.com/api/v1/image/106878527-1620223837055-106748412-1602881184740-biden.jpg?v=1620224062",
+            promises : [
+            {
+                promise: "Rejoin Paris Agreement",
+                checked : 1
+                },
+                {
+                    promise: "By 2030, reduce greenhouse gas emissions by half relative to 2005 levels",
+                    checked: 0
+                },
+                {
+                    promise: "Implement clean electricity standard that rewards utilities who switch to renewables and penalizes those who don’t",
+                    checked: 2
+                },
+            ]
+        }, 
+        {
+            name: "Barack Obama",
+            country: "United States of America",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/800px-President_Barack_Obama.jpg",
+            promises : [
+            {
+                promise: "Establish the first-ever national carbon pollution standards for power plants",
+                checked : 1
+                },
+                {
+                    promise: "Establish new standards for cleaner gasoline and vehicles to reduce harmful air pollution",
+                    checked: 1
+                },
+                {
+                    promise: "Cut back on carbon emissions from burning fossil fuels",
+                    checked: 1
+                },
+            ]
+        }, 
+        {
+            name: "Xi Jinping",
+            country: "China",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Xi_Jinping_2019.jpg/220px-Xi_Jinping_2019.jpg",
+            promises : [
+                {
+                    promise: "Peak emissions by 2030, carbon-neutral by 2060",
+                    checked : 0
+                },
+                {
+                    promise: "No more building coal plants abroad",
+                    checked: 0
+                },
+                {
+                    promise: "increase forests by 6 billion cubic meters",
+                    checked: 0
+                }
+
+            ]  
+        },
+        {
+                name: "Vladimir Putin",
+                country: "Russia",
+                image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Vladimir_Putin_%282018-03-01%29_03_%28cropped%29.jpg/800px-Vladimir_Putin_%282018-03-01%29_03_%28cropped%29.jpg",
+                promises : [
+                {
+                    promise: "“strive for” carbon-neutrality by 2060, not a firm promise (relies significantly on increasing estimates for how much CO2 Russia’s vast forests will absorb as opposed to promising more green energy)",
+                    checked : 0
+                },
+                {
+                    promise: "supports CO2 “cap and trade” scheme, opposed to carbon tax",
+                    checked: 1
+                },
+            ]
+        },
+        {
+            name: "Emmanuel Macron",
+            country: "France",
+            image: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg",
+            promises : [
+                {
+                    promise: "hold referendum to put climate action in French constitution",
+                    checked : 2
+                },
+                {
+                    promise: "carbon neutrality for France by 2050",
+                    checked: 0
+                },
+                {
+                    promise: "speed up development of renewable energy without abandoning nuclear",
+                    checked: 0
+                },
+            ]
+        },
+        {
+		    name: "Donald Trump",
+		    country: "United States of America",
+		    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Donald_Trump_official_portrait.jpg/800px-Donald_Trump_official_portrait.jpg",
+		    promises : [
+		        {
+              		promise: "Take US out of Paris agreement (done but reversed by Biden)",
+              		checked : 2
+		        },
+		    ]
+    	},
+        {
+            name: "Narendra Modi",
+            country: "India",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Official_portrait_of_the_Prime_Minister_Narendra_Modi%2C_November_2020_%28cropped%29.jpg/1024px-Official_portrait_of_the_Prime_Minister_Narendra_Modi%2C_November_2020_%28cropped%29.jpg",
+            promises : [
+                {
+                    promise: "50% of energy needs through renewables by 2030",
+                    checked : 0
+                },
+                {
+                    promise: "net-zero emissions by 2070",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Andrés Manuel López Obrador",
+            country: "Mexico",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Reuni%C3%B3n_con_el_presidente_electo_y_equipos_de_trabajo_6_%28cropped%29.jpg/800px-Reuni%C3%B3n_con_el_presidente_electo_y_equipos_de_trabajo_6_%28cropped%29.jpg",
+            promises : [
+                {
+              		promise: "reduce emissions by 22% by 2030",
+              		checked : 0
+		        },
+                {
+                    promise: "35% of energy from renewables by 2035",
+                    checked: 0
+                },
+                {
+                    promise: "reduce emissions by 50% by 2050",
+                    checked: 0
+                },
+            ]
+	    },	
+        {
+            name: "Mohammed bin Salman",
+            country: "Saudi Arabia",
+            image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Mohammad_bin_Salman_October_2019_%28cropped%29.jpg",
+            promises : [
+                {
+                    promise: "plant 450 million trees by 2030",
+                    checked : 0
+                },
+                {
+                    promise: "achieve net zero emissions by 2060",
+                    checked: 0
+                },
+            ]
+	    },	
+        {
+            name: "Moon Jae-in",
+            country: "South Korea",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Moon_Jae-in_presidential_portrait.jpg/800px-Moon_Jae-in_presidential_portrait.jpg",
+            promises : [
+                {   
+                    promise: "reduce coal power from 41.9% to 21.8% of energy by 2030",
+                    checked : 0
+                },
+                {
+                    promise: "30% of energy from renewable sources by 2030",
+                    checked: 0
+                },
+                {
+                    promise: "40% reduction of emissions from 2018 levels by 2030",
+                    checked: 0
+                },
+                {
+                    promise: "carbon neutrality by 2050",
+                    checked: 0
+                },
+            ]
+	    },	
+        {
+            name: "Recep Tayyip Erdoğan",
+            country: "Turkey",
+            image: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Recep_Tayyip_Erdo%C4%9Fan_2021.jpg",
+            promises : [
+                {
+                    promise: "ratify Paris Agreement (last G20 country to do so)",
+                    checked : 1
+                },
+                {
+                    promise: "reduce emissions by 21 percent below expected levels by 2030",
+                    checked: 0
+                },
+                {
+                    promise: "achieve carbon neutrality by 2053",
+                    checked: 0
+                },
+            ]
+	    },
+        {
+            name: "Olaf Scholz",
+            country: "Germany",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/2021-09-12_Politik%2C_TV-Triell_Bundestagswahl_2021_1DX_3801_by_Stepro_%28cropped%29.jpg/220px-2021-09-12_Politik%2C_TV-Triell_Bundestagswahl_2021_1DX_3801_by_Stepro_%28cropped%29.jpg",
+            promises : [
+            {
+                promise: "halt man-made climate change",
+                checked : 0
+                },
+                {
+                    promise: "Increased investment in rail over roads to accelerate the decarbonization of transport",
+                    checked: 0
+                },
+                {
+                    promise: "phase out coal use by 2030",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Ursula von der Leyen",
+            country: "European Union",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Ursula_von_der_Leyen_%2849468709252%29.jpg/800px-Ursula_von_der_Leyen_%2849468709252%29.jpg",
+            promises : [
+            {
+                promise: "Europe with its European Green Deal will spare no effort to become the first climate neutral continent",
+                checked : 0
+                },
+                {
+                    promise: "mobilising climate finance to better support vulnerable countries in the climate adaptation",
+                    checked: 0
+                },
+                {
+                    promise: "cutting back on methane emissions",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Boris Johnson",
+            country: "United Kingdom",
+            image: "https://upload.wikimedia.org/wikipedia/commons/7/76/Boris_Johnson_official_portrait_%28cropped%29.jpg",
+            promises : [
+            {
+                promise: "decarbonise the economy by 2050 as part of a 'Green Industrial Revolution'",
+                checked : 0
+                },
+                {
+                    promise: "endangered species needed concerted, co-ordinated, global action.",
+                    checked: 0
+                },
+                {
+                    promise: "ban on the sale of diesel and petrol cars by 2030",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Scott Morrison",
+            country: "Australia",
+            image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Prime_Ministers_of_Australia_Scott_Morrison.jpg",
+            promises : [
+            {
+                promise: "achieving net zero emissions in 2050",
+                checked : 0
+                },
+                {
+                    promise: "reduce emissions by 30% to 35% by 2030",
+                    checked: 0
+                },
+                {
+                    promise: "phase out coal use by 2030",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Justin Trudeau",
+            country: "Canada",
+            image: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Trudeau_visit_White_House_for_USMCA_%28cropped%29.jpg",
+            promises : [
+            {
+                promise: "implementation of a global price on carbon",
+                checked : 0
+                },
+                {
+                    promise: "increased aid for developing countries to help them transition toward cleaner economies",
+                    checked: 1
+                },
+                {
+                    promise: "reduce emissions by 40 to 45 per cent, compared to 2005 levels, by 2030",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Joko Widodo",
+            country: "Indonesia",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Joko_Widodo_2019_official_portrait.jpg/800px-Joko_Widodo_2019_official_portrait.jpg",
+            promises : [
+            {
+                promise: "rehabilitate mangrove forests covering an area of 600,000 hectares until 2024’",
+                checked : 0
+                },
+                {
+                    promise: "construction of the largest solar power plant in Southeast Asia",
+                    checked: 0
+                },
+                {
+                    promise: "construction of the world's largest green industrial area in North Kalimantan province",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Mario Draghi",
+            country: "Italy",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Mario_Draghi_2021_cropped.jpg/800px-Mario_Draghi_2021_cropped.jpg",
+            promises : [
+            {
+                promise: "triple its climate finance contribution to 1.4 billion dollars per year for the next five years",
+                checked : 0
+                },
+                {
+                    promise: "reaching net zero by the mid-century",
+                    checked: 0
+                },
+                {
+                    promise: "roughly 70 billion Euros of investments into green infrastructure, circular economy and sustainable mobility in Italy by EU",
+                    checked: 0
+                },
+            ]
+        },
+        {
+            name: "Cyril Ramaphosa",
+            country: "South Africa",
+            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Cyril_Ramaphosa_-_President_of_South_Africa_-_2018_%28cropped%29.jpg/800px-Cyril_Ramaphosa_-_President_of_South_Africa_-_2018_%28cropped%29.jpg",
+            promises : [
+            {
+                promise: "decommissioning, the repowering and the repurposing of coal-fired power stations and the roll-out of renewable energy",
+                checked : 0
+                },
+                {
+                    promise: "$8.5 billion will be mobilised over the next three to five years to support South Africa's just transition to a low-carbon, climate resilient future",
+                    checked: 0
+                },
+                {
+                    promise: "increase use of renewable energy in municipal water and wastewater infrastructure",
+                    checked: 0
+                },
+            ]
+        }
+
+    ]
+        //..............................................................................
+        var $btn = $('#submit-btn');
+        var $name = $('#leader-name');
+        var $pic = $('#leader-pic');
+        var $promises = $('#promises');
+        var $leader;
+	    
+	var results_div = document.getElementById('leaders-rs');
+        results_div.style.visibility = "hidden";
+	    
+	var download = document.getElementById('download-btn');
+        download.style.visibility = "hidden";
+
+        $btn.click(function() {
+            leader = $('#level2').val();
+
+            leaders.forEach(element => {
+                if(element.name == leader){
+
+                    promises.innerHTML = ""; // erases html promises elements
+
+                    $name.text(element.name) // update leader name
+                    $pic.attr("src", element.image) // update leader pic
+                    console.log(element.image)
+
+                    // create new div for promises, each div contains check image and promise text
+                    element.promises.forEach(element => {
+                        let div = document.createElement("div"); // creates div for each promise
+
+                        // create img and applies correct check mark
+                        let checkImg = document.createElement("img");
+                        if(element.checked == 0){
+                            checkImg.src = "https://icon-library.com/images/uncheck-icon/uncheck-icon-17.jpg"
+                        }
+                        else if(element.checked == 1){
+                            checkImg.src = "https://upload.wikimedia.org/wikipedia/commons/c/c6/Sign-check-icon.png"
+                        }
+                        else{
+                            checkImg.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Button_Icon_Orange.svg/1024px-Button_Icon_Orange.svg.png"
+                        }
+                        checkImg.classList.add("check")
+                        div.append(checkImg) 
+
+                        // creates p and adds promise text
+                        let promiseText = document.createElement("p");
+                        promiseText.innerHTML = element.promise
+                        div.append(promiseText)
+
+                        $promises.append(div); // append the individual promise div to "promises" list section
+                    });
+                }
+		    results_div.style.visibility = "visible";
+		    download.style.visibility = "visible";
+            })
+        });
+	    
+	    function down(){
+        let div =document.getElementById('leaders-rs');
+        
+        html2canvas(div).then(
+            function(canvas) {
+                save(canvas);
+                console.log(canvas)
+            }
+        )
+    }
+
+    function save(canvas) {
+    
+        var link = document.createElement('a');
+        link.href = canvas.toDataURL();
+        link.download = canvas.toDataURL();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+	    
+	    function share(social){
+    let div =document.getElementById('leaders-rs');
+        
+        html2canvas(div).then(
+            function(canvas) {
+                saveBase64AsFile(canvas, social);
+            }
+        )
+    }
+
+    function saveBase64AsFile(canvas, social) {
+    
+        const link = document.createElement('a');
+        canvas.toBlob(function(blob) {
+            let body = new FormData();
+            body.set('key', '4dec002fbcf11446064d1e7eddc2b6ed');
+            body.append('image', blob);
+            fetch("https://api.imgbb.com/1/upload", {
+                    method: "POST",
+                    body: body
+                }).then(res => res.json()).then( package => package.data).then(image => 
+                {
+                    if (social == 'facebook'){
+                        window.open('http://www.facebook.com/sharer.php?u='+image.display_url)
+
+                    }else if (social == 'twitter'){
+                        window.open('https://twitter.com/intent/tweet?text=Check%20out%20the%20status%20of%20these%20climate%20promises.%20What%20do%20you%20think%20about%20this?'+image.display_url)
+                    }
+                    else if (social =='reddit'){
+                        window.open('http://www.reddit.com/submit?url='+image.display_url)
+                    }
+                    
+                }
+                )    
+        });
+    }
+    </script> 
+    <script src="navresp.js"></script>
+
+    
+</body>
+</html>
